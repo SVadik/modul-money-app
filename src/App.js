@@ -1,57 +1,49 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom"
-import { PrivateRoute } from "./modules/PrivateRoute"
-import { Home } from './modules/Home';
-import { Login } from './modules/Login';
-import { SignUp } from './modules/SignUp';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import Home from './modules/home/home'
+import Login from './modules/login/login'
+import PrivateRoute from './PrivateRoute'
+import { connect } from 'react-redux'
 
-
-export class App extends React.Component {
-  state = {
-    authorized: false
-  }
-
-  login = () => {
-    this.setState({
-      authorized: true,
-    })
-  }
-
-  logout = () => {
-    this.setState({
-      authorized: false,
-    })
-  }
-
+class App extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   const user = JSON.parse(localStorage.getItem('token'));
+  //   this.state = user ? { loggedIn: true, user } : {};
+  // }
   render() {
-    const { authorized } = this.state
     return (
-      <BrowserRouter>
-        <div>
-          <Switch>
-            <PrivateRoute exact path="/private" authorized={authorized}>
-              <Home logout={this.logout}/>
-            </PrivateRoute>
+      <div className="App">
+        <BrowserRouter>
+          <div>
+            <Switch>
+              <PrivateRoute exact path="/">
+                <Home/>
+              </PrivateRoute>
 
-            <Route exact path="/login">
-              <Login login={this.login} authorized={authorized}/>
-            </Route>
-            
-            <Route exact path="/signup">
-              <SignUp login={this.login} authorized={authorized}/>
-            </Route>
+              <Route exact path="/login">
+                <Login/>
+              </Route>
+              
+              {/* <Route exact path="/signup">
+                <SignUp/>
+              </Route> */}
 
-            {
-              this.state.authorized ?
-              <Redirect to="/private" /> :
-              <Redirect to="/login" />
-
-            }
-          </Switch>
-        </div>
-      </BrowserRouter>
+              {
+                this.props.loggedIn ?
+                <Redirect to="/" /> :
+                <Redirect to="/login" />
+              }
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </div>
     );
   }
-};
+}
 
-export default App;
+const mapStateToProps = state => ({
+  loggedIn: state.loginReducer.loggedIn
+});
+
+export default connect(mapStateToProps, null)(App);
