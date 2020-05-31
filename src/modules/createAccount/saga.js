@@ -1,7 +1,7 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { CREATE_ACCOUNT_REQUESTING } from "./constants";
 import { accountsService } from "../api/accountApi";
-import { getAccountsSuccess, getAccountsError, setDisplayedAccount } from "../accounts/actions";
+import { getAccountsSuccess, getAccountsError } from "../accounts/actions";
 
 export function* createAccountWatcher() {
   // while(true){

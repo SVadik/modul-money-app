@@ -1,10 +1,11 @@
-import { GET_ACCOUNTS_REQUEST, GET_ACCOUNTS_SUCCESS, GET_ACCOUNTS_ERROR, SET_DISPLAYED_ACCOUNT } from "./constants"
+import { GET_ACCOUNTS_REQUEST, GET_ACCOUNTS_SUCCESS, ACCOUNTS_ERROR, SET_DISPLAYED_ACCOUNT, MONEY_TRANSFER_REQUEST, MONEY_TRANSFER_SUCCESS } from "./constants"
 
 const initialState = {
   accountsList: [],
   errorMessage: null,
   loading: false,
   displayedAccount: {},
+  moneyTransaction: {}
 }
 
 export const accountsReducer = (state = initialState, action) => {
@@ -23,7 +24,7 @@ export const accountsReducer = (state = initialState, action) => {
         displayedAccount: action.payload[0],
       }
 
-    case GET_ACCOUNTS_ERROR:
+    case ACCOUNTS_ERROR:
       return {
         ...state,
         loading: false,
@@ -35,6 +36,26 @@ export const accountsReducer = (state = initialState, action) => {
           ...state,
           displayedAccount: state.accountsList.find(i => i.number === action.payload.number)
         }
+      
+      case MONEY_TRANSFER_REQUEST:
+        return {
+          ...state,
+          loading: true,
+          moneyTransaction: action.payload
+        }
+  
+      case MONEY_TRANSFER_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+        }
+  
+      // case MONEY_TRANSFER_ERROR:
+      //   return {
+      //     ...state,
+      //     loading: false,
+      //     errorMessage: action.payload
+      //   }
 
     default:
       return state

@@ -31,7 +31,8 @@ class AccountsSwitcher extends React.Component {
           Счетов пока нет
           <button className="btn btn-primary" onClick={this.toggleModal}>Создать счёт</button>
           <Modal show={this.state.isOpen}
-            onClose={this.toggleModal}>
+            onClose={this.toggleModal}
+            modalTitle={'Создание счёта'}>
             <CreateAccount />
           </Modal>
         </div>
@@ -60,7 +61,8 @@ class AccountsSwitcher extends React.Component {
         </table>
         <button className="btn btn-primary" onClick={this.toggleModal}>Создать счёт</button>
           <Modal show={this.state.isOpen}
-            onClose={this.toggleModal}>
+            onClose={this.toggleModal}
+            modalTitle={'Создание счёта'}>
             <CreateAccount />
           </Modal>
       </div>

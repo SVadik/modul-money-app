@@ -18,9 +18,8 @@ function* loginWorker (username, password) {
   let token
   try {
     token = yield call(userService.login, username, password)
-    yield put({ type: LOGIN_SUCCESS })
-
     localStorage.setItem('token', JSON.stringify(token))
+    yield put({ type: LOGIN_SUCCESS })
   } catch (error) {
     yield put({ type: LOGIN_ERROR, error })
   } finally {

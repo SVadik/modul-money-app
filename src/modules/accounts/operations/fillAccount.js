@@ -1,13 +1,15 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import createAccountRequest from './actions'
+import { connect } from 'react-redux';
+import fillAccountRequest from '../actions'
 
-class CreateAccount extends React.Component {
+class FillAccount extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+        number: this.props.number,
+        amount: 0
+    };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
   
   handleChange(e) {
@@ -16,11 +18,12 @@ class CreateAccount extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    this.props.createAccountRequest();
+    this.props.fillAccountRequest();
   }
 
   render() {
-    const { requesting, successful, errors } = this.props
+    const { amount } = this.state;
+    const { requesting, successful, errors, number } = this.props
     if(requesting) {
       return (
         <div>
@@ -45,8 +48,10 @@ class CreateAccount extends React.Component {
     
     return (
      <div>
-      <h5>Вы хотите создать новый счёт?</h5>
+      <h5>Пополнить счёт №{number} на указанную сумму:</h5>
        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="amount">Сумма</label>
+          <input type="number" step="0.01" min="0.01" name="amount" id="amount" value={amount}/>
           <button type="submit" className="btn btn-primary">Да</button>
         </form>
      </div>
@@ -55,9 +60,7 @@ class CreateAccount extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  requesting: state.createAccountReducer.requesting,
-  successful: state.createAccountReducer.successful,
-  errors: state.createAccountReducer.errors,
+  loading: state.accountsReducer.loading,
+  errorMessage: state.accountsReducer.errorMessage,
 });
-
-export default connect(mapStateToProps, { createAccountRequest })(CreateAccount);
+export default connect(mapStateToProps, { fillAccountRequest })(FillAccount);

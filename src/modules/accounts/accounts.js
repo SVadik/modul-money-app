@@ -1,5 +1,5 @@
 import React from 'react'
-import { AccountInfo } from '../accountInfo/accountInfo'
+import AccountInfo from '../accountInfo/accountInfo'
 import { connect } from 'react-redux';
 import { getAccountsRequest, setDisplayedAccount } from './actions'
 import AccountsSwitcher from '../AccountsSwitcher/accountsSwitcher';
